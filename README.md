@@ -13,10 +13,27 @@ it draws.
 | `dict` | Yomitan dictionaries indexed into SQLite, with Yomitan-style deinflection, ranking, frequency and grouping |
 | `sqlite` | The thin wrapper over SQLite `dict` uses |
 | `crop` | An Anki card's image: crop box maths and decode, crop, downscale, JPEG |
+| `anki` | An Anki note: fields rendered as HTML (furigana alignment, cloze split, senses), the audio URL, and the AnkiConnect `addNote` request |
+| `ai` | Asking an AI about a bubble: the prompt, each provider's request body and headers (`requestHeaders`), and reading the answer back |
+| `ai_cache` | Answers cached in SQLite, keyed by provider, model and the exact prompt |
+
+There is no networking in gw-yomi: `ai` and `anki` build requests and read
+replies, and the app sends them (gw-read with `std.http`, wns-reader with
+OkHttp and AnkiDroid's API).
 
 These modules came out of glyphwire's `read/` directory, along with their
 tests. The cell-width helpers that only gw-read's terminal UI uses
-(`mokuro.wrap`, `displayWidth`, `columnToByte`, `spanCells`) stayed there.
+(`mokuro.wrap`, `displayWidth`, `columnToByte`, `spanCells`) and the two
+network jobs (`ai.Job`, `anki.Job`) stayed there.
+
+Changes from gw-read's copies:
+
+- `SQLITE_TRANSIENT` is bound through a C shim (`src/sqlite_shim.c`):
+  Zig refuses the misaligned function pointer on aarch64.
+- The Anthropic default model is `claude-opus-5-5`, and refusal fallbacks
+  are sent for every model that takes them (Opus 5, Opus 5.5, Sonnet 5.5,
+  Fable 5.x).
+- `ai.requestHeaders` decides each provider's headers in one place.
 
 ## Using it
 

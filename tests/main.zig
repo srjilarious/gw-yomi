@@ -16,6 +16,8 @@ const all_tests = blk: {
         testz.Group{ .name = "Kana Tests", .tag = "kana", .mod = @import("./kana_tests.zig") },
         testz.Group{ .name = "Dict Tests", .tag = "dict", .mod = @import("./dict_tests.zig") },
         testz.Group{ .name = "Crop Tests", .tag = "crop", .mod = @import("./crop_tests.zig") },
+        testz.Group{ .name = "AI Tests", .tag = "ai", .mod = @import("./ai_tests.zig") },
+        testz.Group{ .name = "Anki Tests", .tag = "anki", .mod = @import("./anki_tests.zig") },
     }, .{});
 };
 
