@@ -1,0 +1,30 @@
+.{
+    .name = .gw_yomi,
+    .version = "0.1.0",
+    .fingerprint = 0xce98676b6a614867,
+    .minimum_zig_version = "0.17.0",
+    .dependencies = .{
+        .sqlite = .{
+            .url = "https://www.sqlite.org/2026/sqlite-amalgamation-3530400.zip",
+            .hash = "N-V-__8AAGVtrgCcOcmjrOJnagmnRyMrcKaOo09KbU-vu8w8",
+        },
+        .zstbi = .{
+            .url = "git+https://github.com/srjilarious/zstbi.git#820a20adb1a07c3d050d2fc52b5dedb90b3bf2e8",
+            .hash = "zstbi-0.11.0-dev-L0Ea_1iYBwBAN5Adaw13bU1LwWhTEMcmX9q9cbWzwydF",
+        },
+        .testz = .{
+            .url = "https://github.com/srjilarious/testz/archive/refs/tags/v1.8.0.tar.gz",
+            .hash = "testz-1.8.0-abaPyRvmAQDGYH65Owy9l-y_H8UX79PYnH9Jpp6TrY_1",
+            // Only gw-yomi's own tests use it, so a package depending on
+            // gw-yomi never fetches it (or its tree-sitter dependencies).
+            .lazy = true,
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        "LICENSE",
+        "README.md",
+    },
+}
